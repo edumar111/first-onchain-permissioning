@@ -93,4 +93,63 @@ Node address 0x0ef93fa7001807072be25852e3feccf6060f8298
 Enode URL enode://ef9481a9a4694d91e906ff2793d1113e9c72b845350400e42e0a08c98c476fe03f91cf576fb449bc37afb9372b72451aefad14f4823ae6ab5ad9b27478a6bc0f@127.0.0.1:30306
 2024-03-14 17:24:45.379+00:00 | main | INFO  | DefaultP2PNetwork | Node address 0xe35801dc797250dac5ec8ebfcaf6dde32b0b9f35
 
-##
+## limpiar cache de yarn
+    rm -rf node_modules **/node_modules
+    rm -rf yarn.lock **/yarn.lock
+    yarn cache clean
+    yarn install
+
+
+## hex to string
+    https://codebeautify.org/hex-string-converter
+
+    0x72756c6573000000000000000000000000000000000000000000000000000000 --> rules
+    0x61646d696e697374726174696f6e000000000000000000000000000000000000 --> administration
+
+## desplegar los contratos
+copie los node_modules
+
+    yarn truffle migrate --reset --network besu    
+
+## compilar y correr la dapps
+    yarn run build
+    yarn run start
+
+    http://localhost:3000
+
+##   permisionamos los enodes en la dapss===================================================================
+
+## despues de deplegar los contratos activamos **permissions-nodes-contract-enabled**
+
+### node 1
+
+     besu --data-path=data --genesis-file=../genesis.json --revert-reason-enabled --permissions-accounts-contract-enabled=false --permissions-accounts-contract-address "0x0000000000000000000000000000000000008888" --permissions-nodes-contract-enabled  --permissions-nodes-contract-address "0x0000000000000000000000000000000000009999" --permissions-nodes-contract-version=2 --rpc-http-enabled --rpc-http-cors-origins="*" --rpc-http-api=DEBUG,TRACE,ADMIN,ETH,NET,PERM,IBFT --host-allowlist="*"
+
+### node 2
+    besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://4cfa4e1a8a52f5b8334939b0a31ff375fbd95d08f96899888f016ccc92466f50148c06a31c1069bc7c12010c0d356b6c36afb6cd68dcdb7ae5b534e80c4897b5@127.0.0.1:30303 --permissions-accounts-contract-enabled=false --permissions-accounts-contract-address "0x0000000000000000000000000000000000008888" --permissions-nodes-contract-enabled  --permissions-nodes-contract-address "0x0000000000000000000000000000000000009999" --permissions-nodes-contract-version=2 --rpc-http-enabled --rpc-http-cors-origins="*" --rpc-http-api=ADMIN,ETH,NET,PERM,IBFT --host-allowlist="*" --p2p-port=30304 --rpc-http-port=8546
+
+### node 3
+
+    besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://4cfa4e1a8a52f5b8334939b0a31ff375fbd95d08f96899888f016ccc92466f50148c06a31c1069bc7c12010c0d356b6c36afb6cd68dcdb7ae5b534e80c4897b5@127.0.0.1:30303 --permissions-accounts-contract-enabled=false --permissions-accounts-contract-address "0x0000000000000000000000000000000000008888" --permissions-nodes-contract-enabled  --permissions-nodes-contract-address "0x0000000000000000000000000000000000009999" --permissions-nodes-contract-version=2 --rpc-http-enabled --rpc-http-cors-origins="*" --rpc-http-api=ADMIN,ETH,NET,PERM,IBFT --host-allowlist="*" --p2p-port=30305 --rpc-http-port=8547
+
+### node 4
+
+    besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://4cfa4e1a8a52f5b8334939b0a31ff375fbd95d08f96899888f016ccc92466f50148c06a31c1069bc7c12010c0d356b6c36afb6cd68dcdb7ae5b534e80c4897b5@127.0.0.1:30303 --permissions-accounts-contract-enabled=false --permissions-accounts-contract-address "0x0000000000000000000000000000000000008888" --permissions-nodes-contract-enabled  --permissions-nodes-contract-address "0x0000000000000000000000000000000000009999" --permissions-nodes-contract-version=2 --rpc-http-enabled --rpc-http-cors-origins="*" --rpc-http-api=ADMIN,ETH,NET,PERM,IBFT --host-allowlist="*" --p2p-port=30306 --rpc-http-port=8548
+
+
+
+### Activando permissions-accounts-contract=====================================================
+
+### node 1
+    besu --data-path=data --genesis-file=../genesis.json --revert-reason-enabled --permissions-accounts-contract-enabled --permissions-accounts-contract-address "0x0000000000000000000000000000000000008888" --permissions-nodes-contract-enabled  --permissions-nodes-contract-address "0x0000000000000000000000000000000000009999" --permissions-nodes-contract-version=2 --rpc-http-enabled --rpc-http-cors-origins="*" --rpc-http-api=DEBUG,TRACE,ADMIN,ETH,NET,PERM,IBFT --host-allowlist="*"
+
+### node 2
+    besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://4cfa4e1a8a52f5b8334939b0a31ff375fbd95d08f96899888f016ccc92466f50148c06a31c1069bc7c12010c0d356b6c36afb6cd68dcdb7ae5b534e80c4897b5@127.0.0.1:30303 --permissions-accounts-contract-enabled --permissions-accounts-contract-address "0x0000000000000000000000000000000000008888" --permissions-nodes-contract-enabled  --permissions-nodes-contract-address "0x0000000000000000000000000000000000009999" --permissions-nodes-contract-version=2 --rpc-http-enabled --rpc-http-cors-origins="*" --rpc-http-api=ADMIN,ETH,NET,PERM,IBFT --host-allowlist="*" --p2p-port=30304 --rpc-http-port=8546
+
+### node 3
+
+    besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://4cfa4e1a8a52f5b8334939b0a31ff375fbd95d08f96899888f016ccc92466f50148c06a31c1069bc7c12010c0d356b6c36afb6cd68dcdb7ae5b534e80c4897b5@127.0.0.1:30303 --permissions-accounts-contract-enabled --permissions-accounts-contract-address "0x0000000000000000000000000000000000008888" --permissions-nodes-contract-enabled  --permissions-nodes-contract-address "0x0000000000000000000000000000000000009999" --permissions-nodes-contract-version=2 --rpc-http-enabled --rpc-http-cors-origins="*" --rpc-http-api=ADMIN,ETH,NET,PERM,IBFT --host-allowlist="*" --p2p-port=30305 --rpc-http-port=8547
+
+### node 4
+
+    besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://4cfa4e1a8a52f5b8334939b0a31ff375fbd95d08f96899888f016ccc92466f50148c06a31c1069bc7c12010c0d356b6c36afb6cd68dcdb7ae5b534e80c4897b5@127.0.0.1:30303 --permissions-accounts-contract-enabled --permissions-accounts-contract-address "0x0000000000000000000000000000000000008888" --permissions-nodes-contract-enabled  --permissions-nodes-contract-address "0x0000000000000000000000000000000000009999" --permissions-nodes-contract-version=2 --rpc-http-enabled --rpc-http-cors-origins="*" --rpc-http-api=ADMIN,ETH,NET,PERM,IBFT --host-allowlist="*" --p2p-port=30306 --rpc-http-port=8548
